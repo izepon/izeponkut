@@ -1,4 +1,5 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { IzeponkutStyles } from '../src/lib/IzeponkutCommons';
 
 const GlobalStyle = createGlobalStyle`
 /*Resetar CSS(Necolas Reset CSS) */
@@ -24,6 +25,8 @@ const GlobalStyle = createGlobalStyle`
     height: auto;
     display: block;
   }
+
+  ${IzeponkutStyles}
 `;
 
 const theme = {

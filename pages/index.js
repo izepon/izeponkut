@@ -1,7 +1,8 @@
 
 import MainGrid from "../src/components/MainGrid";
 import Box from "../src/components/Box";
-import { IzeponKutMenu } from '../src/lib/IzeponkutCommons';
+import { IzeponKutMenu, OrkutNostalgicIconSet } from '../src/lib/IzeponkutCommons';
+import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 
 function ProfileSidebar(properties) {
   return (
@@ -14,6 +15,7 @@ function ProfileSidebar(properties) {
 export default function Home() {
 
   const githubUser = 'izepon';
+  const pessoasFavoritas = ['juunegreiros', 'omariosouto', 'peas', 'rafaballerini','marcobrunodev', 'felipefialho'];
 
   return (
     <>
@@ -23,10 +25,32 @@ export default function Home() {
           <ProfileSidebar githubUser={githubUser}/>
         </div>
         <div className="welcomeArea" style={{gridArea: 'welcomeArea'}}>
-          <Box>Bem vindo</Box>
+          <Box>
+            <h1 className="title">
+              Bem vindo(a)
+            </h1>
+
+            <OrkutNostalgicIconSet />
+            </Box>
         </div>
         <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
-          <Box>Amigos do Github</Box>
+          <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+              Amigos do Github ({pessoasFavoritas.length})
+            </h2>
+            <ul>
+              {pessoasFavoritas.map((itemAtual) => {
+                   return (
+                       <li>
+                        <a href={`/users/${itemAtual}`} key={itemAtual}>
+                          <img src={`https://github.com/${itemAtual}.png`} />
+                          <span>{itemAtual}</span>
+                        </a>
+                      </li>
+                   )
+              })}
+            </ul>
+          </ProfileRelationsBoxWrapper>
           <Box>Comunidades</Box>
         </div>      
       </MainGrid>

@@ -4,15 +4,15 @@ import Box from "../src/components/Box";
 import { IzeponKutMenu, IzeponkutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/IzeponkutCommons';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 
-function ProfileSidebar(properties) {
+function ProfileSidebar(propriedades) {
   return (
     <Box>
-      <img src={`https://github.com/${properties.githubUser}.png`} style={{ borderRadius: '8px' }}/>
+      <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }}/>
       <hr />
 
       <p>
-        <a className="boxLink" href={`https://github.com/${properties.githubUser}`}>
-          @{properties.githubUser}
+        <a className="boxLink" href={`https://github.com/${propriedades.githubUser}`}>
+          @{propriedades.githubUser}
         </a>
       </p>
       <hr />
@@ -65,15 +65,18 @@ export default function Home() {
 
     const formData = new FormData(e.target);
 
-    console.log('Campo: ', formData.get('title'));
-    console.log('Campo: ', formData.get('image'));
-
     const comunidade = {
       id: new Date().toISOString(),
       title: formData.get('title'),
       image: formData.get('image'),
     };
 
+    if(formData.get('title').length === 0){
+      return alert('Informe uma nome para sua Comunidade')
+    }
+    if(formData.get('image').length === 0){
+      return alert('Coloque uma imagem URL para sua Comunidade')
+    }
     setComunidades([...comunidades, comunidade]);
   }
 
@@ -183,10 +186,7 @@ export default function Home() {
             {comunidades.length > 6 && (
               <>
                 <hr />
-                <button
-                  className="toggleButton"
-                  onClick={(e) => aplicarVerMaisComunidade(e)}
-                >
+                <button className="toggleButton" onClick={(e) => aplicarVerMaisComunidade(e)}>
                   {verMaisComunidades ? 'Ver menos' : 'Ver mais'}
                 </button>
               </>

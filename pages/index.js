@@ -16,7 +16,6 @@ function ProfileSidebar(properties) {
         </a>
       </p>
       <hr />
-
       <IzeponkutProfileSidebarMenuDefault />
     </Box>
   )
@@ -25,13 +24,18 @@ function ProfileSidebar(properties) {
 export default function Home() {
 
   const githubUser = 'izepon';
-  const comunidade = [];
-  const [isShowingMore, setIsShowingMore] = useState(false);
-  // const [isShowingMoreFollows, setIsShowingMoreFollows] = useState(false);
 
-  // const [isShowingMoreCommunities, setIsShowingMoreCommunities] = useState(false);
+  const [isShowingMore, setIsShowingMore] = useState(false);
+  const [isShowingMoreCommunities, setIsShowingMoreCommunities] = useState(false);
   const [followers, setFollowers] = useState([]);
   const [follows, setFollows] = useState([]);
+  const [communities, setCommunities] = useState([
+    {
+      id: 1,
+      title: 'Eu odeio acordar cedo',
+      image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg',
+    },    
+  ]);
 
   function getGithubFollowers() {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
@@ -55,7 +59,28 @@ export default function Home() {
     e.preventDefault();
     setIsShowingMore(!isShowingMore);
   }
+  
+  function handleCreateCommunity(e) {
+    e.preventDefault();
 
+    const formData = new FormData(e.target);
+
+    console.log('Campo: ', formData.get('title'));
+    console.log('Campo: ', formData.get('image'));
+
+    const community = {
+      id: new Date().toISOString(),
+      title: formData.get('title'),
+      image: formData.get('image'),
+    };
+
+    setCommunities([...communities, community]);
+  }
+
+  function handleShowMoreCommunities(e) {
+    e.preventDefault();
+    setIsShowingMoreCommunities(!isShowingMoreCommunities);
+  }
 
 
   return (
@@ -76,10 +101,7 @@ export default function Home() {
 
             <Box>
               <h2 className="subTitle">O que você deseja fazer?</h2>
-              <form onSubmit={function handleCreateCommunity(e){
-                e.preventDefault();
-
-              }}>
+              <form onSubmit={(e) => handleCreateCommunity(e)}>
                 <div>
                   <input placeholder="Qual vai ser o nome da sua comunidade?" name="title" aria-label="Qual vai ser o nome da sua comunidade?" type="text"/>
                 </div>
@@ -144,7 +166,34 @@ export default function Home() {
               )}
             </ProfileRelationsBoxWrapper>
 
-          <Box>Comunidades</Box>
+          <ProfileRelationsBoxWrapper
+            isShowingMoreItems={isShowingMoreCommunities}
+          >
+            <h2 className="smallTitle">Comunidades ({communities.length})</h2>
+            <ul>
+              {communities.map((item) => {
+                return (
+                  <li key={item.id}>
+                    <a href={`/users/${item.title}`}>
+                      <img src={item.image} />
+                      <span>{item.title}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            {communities.length > 6 && (
+              <>
+                <hr />
+                <button
+                  className="toggleButton"
+                  onClick={(e) => handleShowMoreCommunities(e)}
+                >
+                  {isShowingMoreCommunities ? 'Ver menos' : 'Ver mais'}
+                </button>
+              </>
+            )}
+          </ProfileRelationsBoxWrapper>
         </div>      
       </MainGrid>
     </>

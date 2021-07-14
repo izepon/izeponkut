@@ -6,7 +6,7 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     display: grid;
     grid-gap: 8px;
     grid-template-columns: 1fr 1fr 1fr; 
-    max-height: ${(props) => (props.isShowingMoreItems ? '' : '220px')};
+    max-height: ${(props) => (props.verMaisItens ? '' : '220px')};
     overflow: hidden;
     list-style: none;
   }

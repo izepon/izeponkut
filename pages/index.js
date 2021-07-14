@@ -25,11 +25,11 @@ export default function Home() {
 
   const githubUser = 'izepon';
 
-  const [isShowingMore, setIsShowingMore] = useState(false);
-  const [isShowingMoreCommunities, setIsShowingMoreCommunities] = useState(false);
-  const [followers, setFollowers] = useState([]);
-  const [follows, setFollows] = useState([]);
-  const [communities, setCommunities] = useState([
+  const [verMais, setVerMais] = useState(false);
+  const [verMaisComunidades, setVerMaisComunidades] = useState(false);
+  const [seguidores, setSeguidores] = useState([]);
+  const [seguidor, setSeguidor] = useState([]);
+  const [comunidades, setComunidades] = useState([
     {
       id: 1,
       title: 'Eu odeio acordar cedo',
@@ -37,30 +37,30 @@ export default function Home() {
     },    
   ]);
 
-  function getGithubFollowers() {
+  function githubSeguidores() {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
       .then((res) => res.json())
-      .then((data) => setFollowers(data))
+      .then((data) => setSeguidores(data))
       .catch((error) => console.log(error));
   }
-  function getGithubFollows() {
+  function githubSeguidor() {
     fetch(`https://api.github.com/users/${githubUser}/following`)
       .then((res) => res.json())
-      .then((data) => setFollows(data))
+      .then((data) => setSeguidor(data))
       .catch((error) => console.log(error));
   }
 
   useEffect(() => {
-    getGithubFollowers(),
-    getGithubFollows()
+    githubSeguidores(),
+    githubSeguidor()
   }, []);
 
-  function handleShowMore(e) {
+  function aplicarVerMais(e) {
     e.preventDefault();
-    setIsShowingMore(!isShowingMore);
+    setVerMais(!verMais);
   }
   
-  function handleCreateCommunity(e) {
+  function aplicarCriarComunidade(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -68,18 +68,18 @@ export default function Home() {
     console.log('Campo: ', formData.get('title'));
     console.log('Campo: ', formData.get('image'));
 
-    const community = {
+    const comunidade = {
       id: new Date().toISOString(),
       title: formData.get('title'),
       image: formData.get('image'),
     };
 
-    setCommunities([...communities, community]);
+    setComunidades([...comunidades, comunidade]);
   }
 
-  function handleShowMoreCommunities(e) {
+  function aplicarVerMaisComunidade(e) {
     e.preventDefault();
-    setIsShowingMoreCommunities(!isShowingMoreCommunities);
+    setVerMaisComunidades(!verMaisComunidades);
   }
 
 
@@ -101,7 +101,7 @@ export default function Home() {
 
             <Box>
               <h2 className="subTitle">O que você deseja fazer?</h2>
-              <form onSubmit={(e) => handleCreateCommunity(e)}>
+              <form onSubmit={(e) => aplicarCriarComunidade(e)}>
                 <div>
                   <input placeholder="Qual vai ser o nome da sua comunidade?" name="title" aria-label="Qual vai ser o nome da sua comunidade?" type="text"/>
                 </div>
@@ -116,12 +116,12 @@ export default function Home() {
         </div>
         <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
 
-        <ProfileRelationsBoxWrapper isShowingMoreItems={isShowingMore}>
+        <ProfileRelationsBoxWrapper verMaisItens={verMais}>
             <h2 className="smallTitle">
-              Seguidores do Github ({followers.length})
+              Seguidores do Github ({seguidores.length})
             </h2>
             <ul>
-            {followers.map((item) => {
+            {seguidores.map((item) => {
                 return (
                   <li key={item.id}>
                     <a href={`https://github.com/${item.login}`}>
@@ -131,22 +131,22 @@ export default function Home() {
                   </li>
                 ); })}
             </ul>
-            {followers.length > 6 && (
+            {seguidores.length > 6 && (
               <>
                 <hr />
-                <button className="toggleButton" onClick={(e) => handleShowMore(e)}>
-                  {isShowingMore ? 'Ver menos' : 'Ver mais'}
+                <button className="toggleButton" onClick={(e) => aplicarVerMais(e)}>
+                  {verMais ? 'Ver menos' : 'Ver mais'}
                 </button>
               </>
             )}
           </ProfileRelationsBoxWrapper>
 
-          <ProfileRelationsBoxWrapper isShowingMoreItems={isShowingMore}>
+          <ProfileRelationsBoxWrapper verMaisItens={verMais}>
               <h2 className="smallTitle">
-                Seguindo no Github ({follows.length})
+                Seguindo no Github ({seguidor.length})
               </h2>
               <ul>
-              {follows.map((item) => {
+              {seguidor.map((item) => {
                   return (
                     <li key={item.id}>
                       <a href={`https://github.com/${item.login}`}>
@@ -156,22 +156,20 @@ export default function Home() {
                     </li>
                   ); })}
               </ul>
-              {follows.length > 6 && (
+              {seguidor.length > 6 && (
                 <>
                   <hr />
-                  <button className="toggleButton" onClick={(e) => handleShowMore(e)}>
-                    {isShowingMore ? 'Ver menos' : 'Ver mais'}
+                  <button className="toggleButton" onClick={(e) => aplicarVerMais(e)}>
+                    {verMais ? 'Ver menos' : 'Ver mais'}
                   </button>
                 </>
               )}
             </ProfileRelationsBoxWrapper>
 
-          <ProfileRelationsBoxWrapper
-            isShowingMoreItems={isShowingMoreCommunities}
-          >
-            <h2 className="smallTitle">Comunidades ({communities.length})</h2>
+          <ProfileRelationsBoxWrapper verMaisItens={verMaisComunidades} >
+            <h2 className="smallTitle">Comunidades ({comunidades.length})</h2>
             <ul>
-              {communities.map((item) => {
+              {comunidades.map((item) => {
                 return (
                   <li key={item.id}>
                     <a href={`/users/${item.title}`}>
@@ -182,14 +180,14 @@ export default function Home() {
                 );
               })}
             </ul>
-            {communities.length > 6 && (
+            {comunidades.length > 6 && (
               <>
                 <hr />
                 <button
                   className="toggleButton"
-                  onClick={(e) => handleShowMoreCommunities(e)}
+                  onClick={(e) => aplicarVerMaisComunidade(e)}
                 >
-                  {isShowingMoreCommunities ? 'Ver menos' : 'Ver mais'}
+                  {verMaisComunidades ? 'Ver menos' : 'Ver mais'}
                 </button>
               </>
             )}

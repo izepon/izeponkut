@@ -46,10 +46,11 @@ export default function Home() {
   }
 
   //API GraphQL
+ function consultarComunidades() {
     fetch('https://graphql.datocms.com/', 
     {method:'POST',
      headers: {
-       'Authorization': '2efcb9b675ea690ba84e6c8ed93615',
+       'Authorization': '08d62e7b08addc96d6adb783ce2d7b',
        'Content-Type': 'application/json',
        'Accept': 'application/json',       
      },
@@ -61,10 +62,12 @@ export default function Home() {
         const comunidadesDoDato = respostaCompleta.data.allCommunities;
         setComunidades(comunidadesDoDato);
       })
+    }
 
   useEffect(() => {
     githubSeguidores(),
-    githubSeguidor()
+    githubSeguidor(),
+    consultarComunidades()
   }, []);
 
   function aplicarVerMais(e) {
@@ -80,7 +83,7 @@ export default function Home() {
     const comunidade = {
       title: formData.get('title'),
       image: formData.get('image'),
-      creatorSlug: githubUser,
+      creator_slug: githubUser,
     };
 
     if(formData.get('title').length === 0){
@@ -94,7 +97,6 @@ export default function Home() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
       },
       body: JSON.stringify(comunidade)
     })
@@ -102,7 +104,8 @@ export default function Home() {
       const dados = await response.json();
       console.log(dados.registroCriado);
       const comunidade = dados.registroCriado;
-      setComunidades([...comunidades, comunidade]);
+      const comunidadesAtualizadas = [...comunidades, comunidade];
+      setComunidades(comunidadesAtualizadas);
     })
   }
 

@@ -29,17 +29,7 @@ export default function Home() {
   const [verMaisComunidades, setVerMaisComunidades] = useState(false);
   const [seguidores, setSeguidores] = useState([]);
   const [seguidor, setSeguidor] = useState([]);
-  const [comunidades, setComunidades] = useState([
-    // fetch('https://graphql.datocms.com/', 
-    // {method:'POST',
-    //  headers: {
-    //    'Authorization': '2efcb9b675ea690ba84e6c8ed93615',
-    //    'Content-Type': 'application/json',
-    //    'Accept': 'application/json',       
-    //  },
-    //  body: JSON.stringify({ "query": ` query {allCommunities {id, title, image}}` })
-    //  })
-  ]);
+  const [comunidades, setComunidades] = useState([]);
 
   function githubSeguidores() {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
@@ -72,7 +62,6 @@ export default function Home() {
         setComunidades(comunidadesDoDato);
       })
 
-
   useEffect(() => {
     githubSeguidores(),
     githubSeguidor()
@@ -89,9 +78,9 @@ export default function Home() {
     const formData = new FormData(e.target);
 
     const comunidade = {
-      id: new Date().toISOString(),
       title: formData.get('title'),
       image: formData.get('image'),
+      creatorSlug: githubUser,
     };
 
     if(formData.get('title').length === 0){
@@ -100,7 +89,21 @@ export default function Home() {
     if(formData.get('image').length === 0){
       return alert('Coloque uma imagem URL para sua Comunidade')
     }
-    setComunidades([...comunidades, comunidade]);
+
+    fetch('/api/comunidades', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(comunidade)
+    })
+    .then(async (response) => {
+      const dados = await response.json();
+      console.log(dados.registroCriado);
+      const comunidade = dados.registroCriado;
+      setComunidades([...comunidades, comunidade]);
+    })
   }
 
   function aplicarVerMaisComunidade(e) {

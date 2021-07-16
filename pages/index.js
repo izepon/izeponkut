@@ -6,7 +6,7 @@ import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 
 function ProfileSidebar(propriedades) {
   return (
-    <Box>
+    <Box as="aside">
       <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }}/>
       <hr />
 
@@ -30,11 +30,15 @@ export default function Home() {
   const [seguidores, setSeguidores] = useState([]);
   const [seguidor, setSeguidor] = useState([]);
   const [comunidades, setComunidades] = useState([
-    {
-      id: 1,
-      title: 'Eu odeio acordar cedo',
-      image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg',
-    },    
+    // fetch('https://graphql.datocms.com/', 
+    // {method:'POST',
+    //  headers: {
+    //    'Authorization': '2efcb9b675ea690ba84e6c8ed93615',
+    //    'Content-Type': 'application/json',
+    //    'Accept': 'application/json',       
+    //  },
+    //  body: JSON.stringify({ "query": ` query {allCommunities {id, title, image}}` })
+    //  })
   ]);
 
   function githubSeguidores() {
@@ -43,12 +47,31 @@ export default function Home() {
       .then((data) => setSeguidores(data))
       .catch((error) => console.log(error));
   }
+  
   function githubSeguidor() {
     fetch(`https://api.github.com/users/${githubUser}/following`)
       .then((res) => res.json())
       .then((data) => setSeguidor(data))
       .catch((error) => console.log(error));
   }
+
+  //API GraphQL
+    fetch('https://graphql.datocms.com/', 
+    {method:'POST',
+     headers: {
+       'Authorization': '2efcb9b675ea690ba84e6c8ed93615',
+       'Content-Type': 'application/json',
+       'Accept': 'application/json',       
+     },
+     body: JSON.stringify({ "query": `query {allCommunities {id, title, image}}` })
+     
+      })
+      .then((resposta) => resposta.json())
+      .then((respostaCompleta) => {
+        const comunidadesDoDato = respostaCompleta.data.allCommunities;
+        setComunidades(comunidadesDoDato);
+      })
+
 
   useEffect(() => {
     githubSeguidores(),
@@ -84,7 +107,6 @@ export default function Home() {
     e.preventDefault();
     setVerMaisComunidades(!verMaisComunidades);
   }
-
 
   return (
     <>
@@ -174,8 +196,8 @@ export default function Home() {
             <ul>
               {comunidades.map((item) => {
                 return (
-                  <li key={item.id}>
-                    <a href={`/users/${item.title}`}>
+                  <li>
+                    <a href={item.title.id}>
                       <img src={item.image} />
                       <span>{item.title}</span>
                     </a>

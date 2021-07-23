@@ -25,11 +25,15 @@ export default function Home() {
 
   const githubUser = 'izepon';
 
-  const [verMais, setVerMais] = useState(false);
-  const [verMaisComunidades, setVerMaisComunidades] = useState(false);
+  
+  
   const [seguidores, setSeguidores] = useState([]);
+  const [verMaisSeguidores, setVerMaisSeguidores] = useState(false);
   const [seguidor, setSeguidor] = useState([]);
+  const [verMaisSeguidor, setVerMaisSeguidor] = useState(false);
+
   const [comunidades, setComunidades] = useState([]);
+  const [verMaisComunidades, setVerMaisComunidades] = useState(false);
 
   function githubSeguidores() {
     fetch(`https://api.github.com/users/${githubUser}/followers`)
@@ -70,11 +74,16 @@ export default function Home() {
     consultarComunidades()
   }, []);
 
-  function aplicarVerMais(e) {
+  function aplicarVerMaisSeguidor(e) {
     e.preventDefault();
-    setVerMais(!verMais);
+    setVerMaisSeguidor(!verMaisSeguidor);
   }
   
+  function aplicarVerMaisSeguidores(e) {
+    e.preventDefault();
+    setVerMaisSeguidores(!verMaisSeguidores);
+  }
+
   function aplicarCriarComunidade(e) {
     e.preventDefault();
 
@@ -147,7 +156,7 @@ export default function Home() {
         </div>
         <div className="profileRelationsArea" style={{gridArea: 'profileRelationsArea'}}>
 
-        <ProfileRelationsBoxWrapper verMaisItens={verMais}>
+        <ProfileRelationsBoxWrapper verMaisItens={verMaisSeguidores}>
             <h2 className="smallTitle">
               Seguidores do Github ({seguidores.length})
             </h2>
@@ -165,14 +174,14 @@ export default function Home() {
             {seguidores.length > 6 && (
               <>
                 <hr />
-                <button className="toggleButton" onClick={(e) => aplicarVerMais(e)}>
-                  {verMais ? 'Ver menos' : 'Ver mais'}
+                <button className="toggleButton" onClick={(e) => aplicarVerMaisSeguidores(e)}>
+                  {verMaisSeguidores ? 'Ver menos' : 'Ver mais'}
                 </button>
               </>
             )}
           </ProfileRelationsBoxWrapper>
 
-          <ProfileRelationsBoxWrapper verMaisItens={verMais}>
+          <ProfileRelationsBoxWrapper verMaisItens={verMaisSeguidor}>
               <h2 className="smallTitle">
                 Seguindo no Github ({seguidor.length})
               </h2>
@@ -190,8 +199,8 @@ export default function Home() {
               {seguidor.length > 6 && (
                 <>
                   <hr />
-                  <button className="toggleButton" onClick={(e) => aplicarVerMais(e)}>
-                    {verMais ? 'Ver menos' : 'Ver mais'}
+                  <button className="toggleButton" onClick={(e) => aplicarVerMaisSeguidor(e)}>
+                    {verMaisSeguidor ? 'Ver menos' : 'Ver mais'}
                   </button>
                 </>
               )}

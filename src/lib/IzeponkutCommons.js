@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import NextLink from 'next/link';
 
+
 const BASE_URL = 'http://Alurakut.vercel.app/';
 const v = '1';
 
@@ -24,7 +25,7 @@ export function IzeponKutMenu({ githubUser }) {
   return (
     <IzeponKutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <IzeponKutMenu.Logo src={`${BASE_URL}/logo.svg`} />
+        <IzeponKutMenu.Logo src={`https://www.datocms-assets.com/52064/1627064611-svg-izeponkut-title.svg`} />
 
         <nav style={{ flex: 1 }}>
           {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (

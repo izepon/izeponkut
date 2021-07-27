@@ -2,7 +2,7 @@
 
 Criar uma replica da rede social Orkut.
 
-Deploy: izeponkut.vercel.app/
+Deploy: https://izeponkut.vercel.app/
 
 ## Login - utilize seu usuário do Github:
 

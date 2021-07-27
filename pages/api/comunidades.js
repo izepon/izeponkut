@@ -14,7 +14,7 @@ export default async function recebedorDeRequest(request, response) {
             // creatorSlug: "izepon"
         })
         
-        console.log(registroCriado);89223-002
+        console.log(registroCriado);
 
         response.json({
             dados:'Algum dado qualquer',

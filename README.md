@@ -1,84 +1,52 @@
-# Example app with styled-components
+## 💡 Objetivo
 
-This example features how you use a different styling solution than [styled-jsx](https://github.com/vercel/styled-jsx) that also supports universal styles. That means we can serve the required styles for the first render within the HTML and then load the rest in the client. In this case we are using [styled-components](https://github.com/styled-components/styled-components).
+Criar uma replica da rede social Orkut.
 
-For this purpose we are extending the `<Document />` and injecting the server side rendered styles into the `<head>`, and also adding the `babel-plugin-styled-components` (which is required for server side rendering). Additionally we set up a global [theme](https://www.styled-components.com/docs/advanced#theming) for styled-components using NextJS custom [`<App>`](https://nextjs.org/docs/advanced-features/custom-app) component.
+Deploy: izeponkut.vercel.app/
 
-## Preview
+## Login - utilize seu usuário do Github:
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+<p align="left">
+  <img alt="mockup" src="https://www.datocms-assets.com/52064/1627424451-login.png" width="80%">
+</p>
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-styled-components)
 
-## Deploy your own
+## Perfil logado:
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+<p align="left">
+  <img alt="mockup" src="https://www.datocms-assets.com/52064/1627424458-perfillogado.png" width="80%">
+</p>
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-styled-components&project-name=with-styled-components&repository-name=with-styled-components)
 
-## How to use
+## 💻 Tecnologias utilizadas
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Tecnologias usadas nesse desenvolvimento:
 
-```bash
-npx create-next-app --example with-styled-components with-styled-components-app
-# or
-yarn create next-app --example with-styled-components with-styled-components-app
-```
+- [React](https://reactjs.org)
+- [Next.js](https://nextjs.org/)
+- [DatoCMS](https://www.datocms.com/)
+- [Json web token](https://jwt.io/)
+- [Nookies](https://www.npmjs.com/package/nookies)
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Foi um grande desafio e meu primeiro contato com ReactJS utilizando NextJs.
 
-### Try it on CodeSandbox
+## :arrow_forward: Utilização - Versão de Desenvolvimento
 
-[Open this example on CodeSandbox](https://codesandbox.io/s/github/vercel/next.js/tree/canary/examples/with-styled-components)
+Para utilizar a aplicação é necessário ter NodeJs e/ou Yarn instalado:
 
-### Notes
+- [Node.js](https://nodejs.org/pt-br/)
+- [Yarn](https://yarnpkg.com/)
 
-When wrapping a [Link](https://nextjs.org/docs/api-reference/next/link) from `next/link` within a styled-component, the [as](https://styled-components.com/docs/api#as-polymorphic-prop) prop provided by `styled` will collide with the Link's `as` prop and cause styled-components to throw an `Invalid tag` error. To avoid this, you can either use the recommended [forwardedAs](https://styled-components.com/docs/api#forwardedas-prop) prop from styled-components or use a different named prop to pass to a `styled` Link.
+Com os software instalados, seguir com:
 
-<details>
-<summary>Click to expand workaround example</summary>
-<br />
+1. **Clonar o projeto** <br>
+   _`git clone https://github.com/izepon/izeponkut`_
 
-**components/StyledLink.js**
-
-```javascript
-import Link from 'next/link'
-import styled from 'styled-components'
-
-const StyledLink = ({ as, children, className, href }) => (
-  <Link href={href} as={as} passHref>
-    <a className={className}>{children}</a>
-  </Link>
-)
-
-export default styled(StyledLink)`
-  color: #0075e0;
-  text-decoration: none;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    color: #40a9ff;
-  }
-
-  &:focus {
-    color: #40a9ff;
-    outline: none;
-    border: 0;
-  }
-`
-```
-
-**pages/index.js**
-
-```javascript
-import StyledLink from '../components/StyledLink'
-
-export default () => (
-  <StyledLink href="/post/[pid]" forwardedAs="/post/abc">
-    First post
-  </StyledLink>
-)
-```
-
-</details>
+2. **Instalar as depêndencias** <br>
+   _`npm install`_ ou _`yarn`_
+   
+3. **Como executar o projeto** <br>
+  _`yarn dev`_ ou _`npm run dev`_
+   
+---
+<p align="center">Desenvolvido por: Jean Carlos Izepon 🙋🏻‍♂️</p>

@@ -24,14 +24,11 @@ function ProfileSidebar(propriedades) {
 export default function Home() {
 
   const githubUser = 'izepon';
-
-  
   
   const [seguidores, setSeguidores] = useState([]);
   const [verMaisSeguidores, setVerMaisSeguidores] = useState(false);
   const [seguidor, setSeguidor] = useState([]);
   const [verMaisSeguidor, setVerMaisSeguidor] = useState(false);
-
   const [comunidades, setComunidades] = useState([]);
   const [verMaisComunidades, setVerMaisComunidades] = useState(false);
 

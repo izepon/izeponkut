@@ -3,6 +3,8 @@ import MainGrid from "../src/components/MainGrid";
 import Box from "../src/components/Box";
 import { IzeponKutMenu, IzeponkutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/IzeponkutCommons';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 
 function ProfileSidebar(propriedades) {
   return (
@@ -21,10 +23,10 @@ function ProfileSidebar(propriedades) {
   )
 }
 
-export default function Home() {
+export default function Home(props) {
 
-  const githubUser = 'izepon';
-  
+  const githubUser = props.githubUser;
+
   const [seguidores, setSeguidores] = useState([]);
   const [verMaisSeguidores, setVerMaisSeguidores] = useState(false);
   const [seguidor, setSeguidor] = useState([]);
@@ -230,4 +232,34 @@ export default function Home() {
       </MainGrid>
     </>
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
+  const token = cookies.USER_TOKEN;
+  const decodedToken = jwt.decode(token);
+  const githubUser = decodedToken?.githubUser;
+
+  if (!githubUser) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  // const followers = await fetch(`https://api.github.com/users/${githubUser}/followers`)
+  //   .then((res) => res.json())
+  //   .then(followers => followers.map((follower) => ({
+  //     id: follower.id,
+  //     name: follower.login,
+  //     image: follower.avatar_url,
+  //   })));
+
+  return {
+    props: {
+      githubUser,
+    }
+  }
 }

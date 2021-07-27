@@ -9,9 +9,6 @@ export default async function recebedorDeRequest(request, response) {
         const registroCriado = await client.items.create({
             itemType:"974482",
             ...request.body,
-            // title: "Comunidade de teste", 
-            // image: "#",
-            // creatorSlug: "izepon"
         })
         
         console.log(registroCriado);

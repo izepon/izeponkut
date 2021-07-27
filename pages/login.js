@@ -1,13 +1,13 @@
 import React from 'react';
-
-
+import { useRouter } from 'next/router';
+import nookies from 'nookies';
 // Hook do NextJS
 
 
 
 export default function PaginaDeLogin() {
-    // const router = useRouter();
-  const [githubUser, setGithubUser] = React.useState('izepon');
+  const router = useRouter();
+  const [githubUser, setGithubUser] = React.useState('');
 
   return (
     <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -23,7 +23,6 @@ export default function PaginaDeLogin() {
         <section className="formArea">
           <form className="box" onSubmit={(infosDoEvento) => {
                 infosDoEvento.preventDefault();
-                // alert('Alguém clicou no botão!')
                 console.log('Usuário: ', githubUser)
                 fetch('https://alurakut.vercel.app/api/login', {
                     method: 'POST',
@@ -75,7 +74,7 @@ export default function PaginaDeLogin() {
 
         <footer className="footerArea">
           <p>
-            © 2021 izeponjc@gmail.com - <a href="/">Sobre o Orkut.br</a> - <a href="/">Centro de segurança</a> - <a href="/">Privacidade</a> - <a href="/">Termos</a> - <a href="/">Contato</a>
+            © 2021 <a href="https://github.com/izepon">Desenvolvido por Izepon</a> - <a href="/">Sobre o Orkut.br</a> - <a href="/">Centro de segurança</a> - <a href="/">Privacidade</a> - <a href="/">Termos</a> - <a href="https://github.com/izepon">Contato</a>
           </p>
         </footer>
       </div>

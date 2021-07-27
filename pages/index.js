@@ -248,15 +248,7 @@ export async function getServerSideProps(ctx) {
       },
     }
   }
-
-  // const followers = await fetch(`https://api.github.com/users/${githubUser}/followers`)
-  //   .then((res) => res.json())
-  //   .then(followers => followers.map((follower) => ({
-  //     id: follower.id,
-  //     name: follower.login,
-  //     image: follower.avatar_url,
-  //   })));
-
+  
   return {
     props: {
       githubUser,
